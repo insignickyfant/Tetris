@@ -131,19 +131,19 @@ public class TetrisBlock
     {
         // make a copy of the current block array to use in calculating the new array
         bool[,] copy = new bool[ShapeSize, ShapeSize];
-        for (int y = 0; y < ShapeSize; y++)
+        for (int row = 0; row < ShapeSize; row++)
         {
-            for (int x = 0; x < ShapeSize; x++)
+            for (int column = 0; column < ShapeSize; column++)
             {
                 // Clockwise Rotation
                 if (direction == "Right")
                 {
-                    copy[x, y] = Shape[y, ShapeSize - 1 - x];
+                    copy[column, row] = Shape[row, ShapeSize - 1 - column];
                 }
                 // Counterclockwise Rotation
                 else if (direction == "Left")
                 {
-                    copy[x, y] = Shape[ShapeSize - 1 - y, x];
+                    copy[column, row] = Shape[ShapeSize - 1 - row, column];
                 }
             }
         }
