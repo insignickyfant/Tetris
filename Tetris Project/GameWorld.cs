@@ -32,12 +32,12 @@ public class GameWorld
     /// <summary>
     /// Keeps track of the player score.
     /// </summary>
-    private int score { get; set; }
+    private int score;
 
     /// <summary>
     /// Keeps track of the current level.
     /// </summary>
-    public int Level { get; set; }
+    private int level;
 
     private int previousLevel;
 
@@ -59,21 +59,14 @@ public class GameWorld
     /// <summary>
     /// TetrisBlock object used for drawing the correct block type.
     /// </summary>
-    public TetrisBlock FallingBlock, NextBlock;
-
     private TetrisBlock fallingBlock, upcomingBlock;
 
-    /// <summary>
-    /// The BlockType enum value for the corresponding block objects.
-    /// </summary>
-    public TetrisBlockFactory.BlockTypeEnum FallingType, NextType;
-
-    public static GameWorld World { get; private set; }
+    private TetrisBlockFactory blockFactory;
 
     public GameWorld(ContentManager contentManager)
     {
-        World = this;
         CurrentGameState = GameState.StartScreen;
+        blockFactory = new(this);
         previousLevel = 0;
 
         font = contentManager.Load<SpriteFont>("font_SpelFont");
@@ -106,7 +99,7 @@ public class GameWorld
         }
     }
 
-    public void HandleInput(GameTime gameTime, InputHelper inputHelper)
+    public void HandleInput(InputHelper inputHelper)
     {
         if (CurrentGameState == GameState.Playing)
         {
@@ -118,7 +111,7 @@ public class GameWorld
         }
     }
 
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
 
@@ -156,12 +149,12 @@ public class GameWorld
     /// </summary>
     public void LevelUpCheck()
     {
-        int requiredScore = Level * 20;
+        int requiredScore = level * 20;
 
         if (score >= requiredScore)
         {
             PlaySoundEffect("sound_yay");
-            Level++;
+            level++;
             timer = 3;
         }
     }
@@ -180,7 +173,7 @@ public class GameWorld
 
         // GUI
         spriteBatch.DrawString(font, "Level: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 50), Color.White);
-        spriteBatch.DrawString(font, Level.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 50), Color.White);
+        spriteBatch.DrawString(font, level.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 50), Color.White);
         spriteBatch.DrawString(font, "Score: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 95), Color.White);
         spriteBatch.DrawString(font, score.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 95), Color.White);
         spriteBatch.DrawString(font, "Upcoming Block: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 300), Color.White);
@@ -200,13 +193,13 @@ public class GameWorld
     {
         if (upcomingBlock == null)
         {
-            fallingBlock = TetrisBlockFactory.GenerateBlock();
-            upcomingBlock = TetrisBlockFactory.GenerateBlock();
+            fallingBlock = blockFactory.GenerateBlock();
+            upcomingBlock = blockFactory.GenerateBlock();
         }
         else
         {
             fallingBlock = upcomingBlock;
-            upcomingBlock = TetrisBlockFactory.GenerateBlock();
+            upcomingBlock = blockFactory.GenerateBlock();
         }
     }
 
@@ -223,7 +216,7 @@ public class GameWorld
     {
         CurrentGameState = GameState.Playing;
         score = 0;
-        Level = 1;
+        level = 1;
         Grid.ClearGrid();
 
         GetNextBlocks();

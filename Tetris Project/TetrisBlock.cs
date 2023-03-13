@@ -43,8 +43,10 @@ public class TetrisBlock
     /// <summary>
     /// Constructor for general tetris blocks.
     /// </summary>
-    public TetrisBlock()
+    public TetrisBlock(GameWorld gameWorld)
     {
+        this.gameWorld = gameWorld;
+
         cellSprite = Tetris.ContentManager.Load<Texture2D>("spr_block");
 
         // falls faster if level is higher

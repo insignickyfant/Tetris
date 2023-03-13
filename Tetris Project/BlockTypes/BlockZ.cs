@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 
 class BlockZ : TetrisBlock
 {
-    public BlockZ()
+    public BlockZ(GameWorld gameWorld) : base(gameWorld)
     {
         ShapeSize = 3;
         Shape = new bool[3, 3] 

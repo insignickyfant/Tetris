@@ -1,33 +1,36 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-public static class TetrisBlockFactory
+
+public class TetrisBlockFactory
 {
-    public static TetrisBlock GenerateBlock()
+    GameWorld gameWorld;
+    public TetrisBlockFactory(GameWorld gameWorld)
+    {
+        this.gameWorld = gameWorld;
+    }
+
+    public TetrisBlock GenerateBlock()
     {
         BlockTypeEnum blockType = (BlockTypeEnum)Tetris.Random.Next(7);
         switch (blockType)
         {
             case BlockTypeEnum.I:
-                return new BlockI();
+                return new BlockI(gameWorld);
             case BlockTypeEnum.J:
-                return new BlockJ();
+                return new BlockJ(gameWorld);
             case BlockTypeEnum.L:
-                return new BlockL();
+                return new BlockL(gameWorld);
             case BlockTypeEnum.O:
-                return new BlockO();
+                return new BlockO(gameWorld);
             case BlockTypeEnum.S:
-                return new BlockS();
+                return new BlockS(gameWorld);
             case BlockTypeEnum.T:
-                return new BlockT();
+                return new BlockT(gameWorld);
             case BlockTypeEnum.Z:
-                return new BlockZ();
+                return new BlockZ(gameWorld);
             default:
-                return new EmptyCell();
+                return new EmptyCell(gameWorld);
         }
     }
 

@@ -64,14 +64,14 @@ class Tetris : Game
     protected override void Update(GameTime gameTime)
     {
         inputHelper.Update(gameTime);
-        gameWorld.HandleInput(gameTime, inputHelper);
+        gameWorld.HandleInput(inputHelper);
         gameWorld.Update(gameTime, spriteBatch);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.White);
-        gameWorld.Draw(gameTime, spriteBatch);
+        gameWorld.Draw(spriteBatch);
     }
 }
 
