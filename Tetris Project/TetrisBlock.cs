@@ -37,8 +37,10 @@ public class TetrisBlock
 
     public int ShapeSize;
 
+    /// <summary>
+    /// The Color of this TetrisBlock, set by each BlockType
+    /// </summary>
     public Color BlockColor { get; protected set; }
-    public TetrisBlockFactory.BlockTypeEnum TypeEnum { get; protected set; }
 
     /// <summary>
     /// Constructor for general tetris blocks.
@@ -50,7 +52,7 @@ public class TetrisBlock
         cellSprite = Tetris.ContentManager.Load<Texture2D>("spr_block");
 
         // falls faster if level is higher
-        velocity = new Vector2(0, cellSprite.Height + 15 * (GameWorld.World.Level - 1));
+        velocity = new Vector2(0, cellSprite.Height + 15 * (gameWorld.Level - 1));
 
         Position = new Vector2(cellSprite.Width * (Grid.Width / 2 - 2), 0);
         newPosition = Vector2.Zero;

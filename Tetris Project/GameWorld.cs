@@ -37,9 +37,7 @@ public class GameWorld
     /// <summary>
     /// Keeps track of the current level.
     /// </summary>
-    private int level;
-
-    private int previousLevel;
+    public int Level;
 
     /// <summary>
     /// The main font of the game.
@@ -61,13 +59,15 @@ public class GameWorld
     /// </summary>
     private TetrisBlock fallingBlock, upcomingBlock;
 
-    private TetrisBlockFactory blockFactory;
+    /// <summary>
+    /// Static reference to the TetrisBlockFactory, which generates random TetrisBlocks.
+    /// </summary>
+    static TetrisBlockFactory blockFactory;
 
     public GameWorld(ContentManager contentManager)
     {
         CurrentGameState = GameState.StartScreen;
         blockFactory = new(this);
-        previousLevel = 0;
 
         font = contentManager.Load<SpriteFont>("font_SpelFont");
         background_start = contentManager.Load<Texture2D>("backgrounds/background_Start");
@@ -149,12 +149,12 @@ public class GameWorld
     /// </summary>
     public void LevelUpCheck()
     {
-        int requiredScore = level * 20;
+        int requiredScore = Level * 20;
 
         if (score >= requiredScore)
         {
             PlaySoundEffect("sound_yay");
-            level++;
+            Level++;
             timer = 3;
         }
     }
@@ -173,7 +173,7 @@ public class GameWorld
 
         // GUI
         spriteBatch.DrawString(font, "Level: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 50), Color.White);
-        spriteBatch.DrawString(font, level.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 50), Color.White);
+        spriteBatch.DrawString(font, Level.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 50), Color.White);
         spriteBatch.DrawString(font, "Score: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 95), Color.White);
         spriteBatch.DrawString(font, score.ToString(), new Vector2(Tetris.ScreenSize.X / 2 + 30, 95), Color.White);
         spriteBatch.DrawString(font, "Upcoming Block: ", new Vector2(Tetris.ScreenSize.X / 2 - 30, 300), Color.White);
@@ -216,7 +216,7 @@ public class GameWorld
     {
         CurrentGameState = GameState.Playing;
         score = 0;
-        level = 1;
+        Level = 1;
         Grid.ClearGrid();
 
         GetNextBlocks();

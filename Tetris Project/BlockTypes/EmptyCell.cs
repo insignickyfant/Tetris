@@ -7,6 +7,5 @@ class EmptyCell : TetrisBlock
     {
         ShapeSize = 1;
         BlockColor = new Color(102, 102, 102);
-        TypeEnum = TetrisBlockFactory.BlockTypeEnum.empty;
     }
 }
