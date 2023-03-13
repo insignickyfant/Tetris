@@ -4,12 +4,12 @@ using System;
 
 public class TetrisBlockFactory
 {
-    GameWorld gameWorld;
+    private GameWorld gameWorld;
 
     /// <summary>
     /// Constructor for the Factory.
     /// </summary>
-    /// <param name="gameWorld">Current GameWorld</param>
+    /// <param name="gameWorld">Needs the GameWorld to pass to TetrisBlock</param>
     public TetrisBlockFactory(GameWorld gameWorld)
     {
         this.gameWorld = gameWorld;
@@ -25,6 +25,7 @@ public class TetrisBlockFactory
         BlockTypeEnum blockType = (BlockTypeEnum)Tetris.Random.Next(7);
         Color color;
 
+        // Set the color to match the random Enum generated.
         switch (blockColor)
         {
             case BlockColorEnum.White:
@@ -40,6 +41,7 @@ public class TetrisBlockFactory
                 color = Color.White;
                 break;
         }
+        // Generate the TetrisBlock with the random color.
         switch (blockType)
         {
             case BlockTypeEnum.I:
@@ -56,8 +58,8 @@ public class TetrisBlockFactory
                 return new BlockT(gameWorld, color);
             case BlockTypeEnum.Z:
                 return new BlockZ(gameWorld, color);
-            default:
-                return new EmptyCell(gameWorld);
+            default: // shouldn't be hit, but otherwise lucky you!
+                return new BlockI(gameWorld, color);
         }
     }
 
