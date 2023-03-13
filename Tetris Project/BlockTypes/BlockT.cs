@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Content;
 
 class BlockT : TetrisBlock
 {
-    public BlockT()
+    public BlockT(GameWorld gameWorld, Color color) : base(gameWorld)
     {
+        BlockColor = color;
         ShapeSize = 3;
         Shape = new bool[3, 3]
         {
@@ -12,7 +13,5 @@ class BlockT : TetrisBlock
             { true, true, false },
             { false, true, false }
         };
-        BlockColor = new Color(53, 148, 118);
-        TypeEnum = TetrisBlockFactory.BlockTypeEnum.T;
     }
 }

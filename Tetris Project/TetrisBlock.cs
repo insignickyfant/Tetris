@@ -37,18 +37,22 @@ public class TetrisBlock
 
     public int ShapeSize;
 
+    /// <summary>
+    /// The Color of this TetrisBlock, set by each BlockType
+    /// </summary>
     public Color BlockColor { get; protected set; }
-    public TetrisBlockFactory.BlockTypeEnum TypeEnum { get; protected set; }
 
     /// <summary>
     /// Constructor for general tetris blocks.
     /// </summary>
-    public TetrisBlock()
+    public TetrisBlock(GameWorld gameWorld)
     {
+        this.gameWorld = gameWorld;
+
         cellSprite = Tetris.ContentManager.Load<Texture2D>("spr_block");
 
         // falls faster if level is higher
-        velocity = new Vector2(0, cellSprite.Height + 15 * (GameWorld.World.Level - 1));
+        velocity = new Vector2(0, cellSprite.Height + 15 * (gameWorld.Level - 1));
 
         Position = new Vector2(cellSprite.Width * (Grid.Width / 2 - 2), 0);
         newPosition = Vector2.Zero;
@@ -127,19 +131,19 @@ public class TetrisBlock
     {
         // make a copy of the current block array to use in calculating the new array
         bool[,] copy = new bool[ShapeSize, ShapeSize];
-        for (int y = 0; y < ShapeSize; y++)
+        for (int row = 0; row < ShapeSize; row++)
         {
-            for (int x = 0; x < ShapeSize; x++)
+            for (int column = 0; column < ShapeSize; column++)
             {
-                // Counterclockwise Rotation
-                if (direction == "Left")
-                {
-                    copy[x, y] = Shape[y, ShapeSize - 1 - x];
-                }
                 // Clockwise Rotation
-                else if (direction == "Right")
+                if (direction == "Right")
                 {
-                    copy[x, y] = Shape[ShapeSize - 1 - y, x];
+                    copy[column, row] = Shape[row, ShapeSize - 1 - column];
+                }
+                // Counterclockwise Rotation
+                else if (direction == "Left")
+                {
+                    copy[column, row] = Shape[ShapeSize - 1 - row, column];
                 }
             }
         }

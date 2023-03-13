@@ -32,10 +32,13 @@ public class Grid
     private GameWorld gameWorld;
 
     /// <summary>
-    /// Stores for each cell of the grid what BlockType currently occupies it
+    /// For each cell of the grid, this array stores the Color of the block currently occupying it
     /// </summary>
-    public TetrisBlockFactory.BlockTypeEnum[,] Occupation { get; private set; }
     public Color[,] BlocksInGrid { get; private set; }
+
+    /// <summary>
+    /// Custom color of the empty cell block
+    /// </summary>
     private Color emptyCellColor = new Color(102, 102, 102);
 
     /// <summary>
@@ -49,7 +52,6 @@ public class Grid
         cellSprite = contentManager.Load<Texture2D>("spr_block");
         position = new Vector2(0, -2 * cellSprite.Height);
         BlocksInGrid = new Color[Width, Height];
-        Occupation = new TetrisBlockFactory.BlockTypeEnum[Width, Height];
         ClearGrid();
     }
 

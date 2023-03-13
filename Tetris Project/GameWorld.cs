@@ -32,14 +32,12 @@ public class GameWorld
     /// <summary>
     /// Keeps track of the player score.
     /// </summary>
-    private int score { get; set; }
+    private int score;
 
     /// <summary>
     /// Keeps track of the current level.
     /// </summary>
-    public int Level { get; set; }
-
-    private int previousLevel;
+    public int Level;
 
     /// <summary>
     /// The main font of the game.
@@ -59,22 +57,17 @@ public class GameWorld
     /// <summary>
     /// TetrisBlock object used for drawing the correct block type.
     /// </summary>
-    public TetrisBlock FallingBlock, NextBlock;
-
     private TetrisBlock fallingBlock, upcomingBlock;
 
     /// <summary>
-    /// The BlockType enum value for the corresponding block objects.
+    /// Static reference to the TetrisBlockFactory, which generates random TetrisBlocks.
     /// </summary>
-    public TetrisBlockFactory.BlockTypeEnum FallingType, NextType;
-
-    public static GameWorld World { get; private set; }
+    static TetrisBlockFactory blockFactory;
 
     public GameWorld(ContentManager contentManager)
     {
-        World = this;
         CurrentGameState = GameState.StartScreen;
-        previousLevel = 0;
+        blockFactory = new(this);
 
         font = contentManager.Load<SpriteFont>("font_SpelFont");
         background_start = contentManager.Load<Texture2D>("backgrounds/background_Start");
@@ -106,7 +99,7 @@ public class GameWorld
         }
     }
 
-    public void HandleInput(GameTime gameTime, InputHelper inputHelper)
+    public void HandleInput(InputHelper inputHelper)
     {
         if (CurrentGameState == GameState.Playing)
         {
@@ -118,7 +111,7 @@ public class GameWorld
         }
     }
 
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
 
@@ -200,13 +193,13 @@ public class GameWorld
     {
         if (upcomingBlock == null)
         {
-            fallingBlock = TetrisBlockFactory.GenerateBlock();
-            upcomingBlock = TetrisBlockFactory.GenerateBlock();
+            fallingBlock = blockFactory.GenerateBlock();
+            upcomingBlock = blockFactory.GenerateBlock();
         }
         else
         {
             fallingBlock = upcomingBlock;
-            upcomingBlock = TetrisBlockFactory.GenerateBlock();
+            upcomingBlock = blockFactory.GenerateBlock();
         }
     }
 
