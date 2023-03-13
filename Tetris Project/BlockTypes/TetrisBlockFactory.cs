@@ -5,11 +5,20 @@ using System;
 public class TetrisBlockFactory
 {
     GameWorld gameWorld;
+
+    /// <summary>
+    /// Constructor for the Factory.
+    /// </summary>
+    /// <param name="gameWorld">Current GameWorld</param>
     public TetrisBlockFactory(GameWorld gameWorld)
     {
         this.gameWorld = gameWorld;
     }
 
+    /// <summary>
+    /// Generates a new random TetrisBlock with a random color by utilizing Enums.
+    /// </summary>
+    /// <returns>Random TetrisBlock with random Color</returns>
     public TetrisBlock GenerateBlock()
     {
         BlockColorEnum blockColor = (BlockColorEnum)Tetris.Random.Next(3);
@@ -53,9 +62,12 @@ public class TetrisBlockFactory
     }
 
     /// <summary>
-    /// Indicates the type of block that needs to be created
+    /// Indicates the type of block that needs to be created.
     /// </summary>
     private enum BlockTypeEnum { I, O, T, L, J, S, Z }
     
+    /// <summary>
+    /// Indicates the three colors a block can have.
+    /// </summary>
     private enum BlockColorEnum { White, Red, Green }
 }

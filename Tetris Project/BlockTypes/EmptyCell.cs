@@ -5,7 +5,7 @@ class EmptyCell : TetrisBlock
 {
     public EmptyCell(GameWorld gameWorld) : base(gameWorld)
     {
-        ShapeSize = 1;
         BlockColor = new Color(102, 102, 102);
+        ShapeSize = 1;
     }
 }

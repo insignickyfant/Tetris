@@ -5,6 +5,7 @@ class BlockS : TetrisBlock
 {
     public BlockS(GameWorld gameWorld, Color color) : base(gameWorld)
     {
+        BlockColor = color;
         ShapeSize = 3;
         Shape = new bool[3, 3]
         {
@@ -12,8 +13,5 @@ class BlockS : TetrisBlock
             { true, true, false},
             { true, false, false}
         };
-
-        //
-        BlockColor = color;
     }
 }
