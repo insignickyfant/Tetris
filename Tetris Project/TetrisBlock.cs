@@ -135,13 +135,13 @@ public class TetrisBlock
         {
             for (int x = 0; x < ShapeSize; x++)
             {
-                // Counterclockwise Rotation
-                if (direction == "Left")
+                // Clockwise Rotation
+                if (direction == "Right")
                 {
                     copy[x, y] = Shape[y, ShapeSize - 1 - x];
                 }
-                // Clockwise Rotation
-                else if (direction == "Right")
+                // Counterclockwise Rotation
+                else if (direction == "Left")
                 {
                     copy[x, y] = Shape[ShapeSize - 1 - y, x];
                 }
